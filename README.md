@@ -3,6 +3,30 @@
 Browse the Guild Wars skill templates in `data/` as skill bars, with icons, names, descriptions
 (values computed for the build's attribute ranks), English/German toggle and wiki links.
 
+![Team view with skill bars, attribute ranks and descriptions](docs/screenshots/overview.png)
+
+## Screenshots
+
+**Skill tooltip:** hover any icon on the bar for the in-game style tooltip; values are computed for the build's attribute rank.
+
+![Tooltip](docs/screenshots/tooltip.png)
+
+**German:** one click switches names, descriptions, attributes and wiki links to German (guildwiki.de).
+
+![German view](docs/screenshots/german.png)
+
+**Search + bars view:** filter by build or skill name (here every build using *Psychic Instability*), and switch to compact skill bars.
+
+![Search and bars view](docs/screenshots/search-bars.png)
+
+**Original post:** each build shows its notes from `data/BUILD_INDEX.md`.
+
+![Build notes](docs/screenshots/notes.png)
+
+**Paste any code:** decode a template (or a `guildwars.magical.ch` link) that isn't in `data/`, shown here in concise mode.
+
+![Pasted template](docs/screenshots/paste.png)
+
 ## Run
 
 ```bash

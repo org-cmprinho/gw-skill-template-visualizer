@@ -31,10 +31,12 @@ const $ = (sel, el = document) => el.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 /* ===================================================================== template decoding */
+// "https://guildwars.magical.ch/<code>" → "<code>" (codes themselves may contain "/")
+const stripUrl = (s) => String(s).trim().replace(/^https?:\/\/[^/]+\//i, "");
 const B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 function decodeTemplate(code) {
-  code = String(code).trim().replace(/^.*\//, "").replace(/[^A-Za-z0-9+/]/g, "");
+  code = stripUrl(code).replace(/[^A-Za-z0-9+/]/g, "");
   const bits = [];
   for (const c of code) {
     const v = B64.indexOf(c);
@@ -187,6 +189,7 @@ function cardHtml(file, idx) {
 
 function renderMain() {
   const main = $("#main");
+  $("#tooltip").hidden = true;   // the hovered slot is about to be replaced
   main.className = "main view-" + S.view;
   let folder;
   if (S.current && S.current.startsWith("decode:")) {
@@ -321,7 +324,7 @@ async function init() {
   $("#decode-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const v = $("#decode-input").value.trim();
-    if (v) select("decode:" + v.replace(/^.*\//, ""));
+    if (v) select("decode:" + stripUrl(v));
   });
   $("#lang-toggle").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
