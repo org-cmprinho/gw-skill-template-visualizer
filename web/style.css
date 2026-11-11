@@ -51,9 +51,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ---------- layout */
 .layout { flex: 1; display: flex; min-height: 0; }
-.sidebar {
-  width: 320px; flex-shrink: 0; overflow-y: auto; background: var(--panel);
-  border-right: 1px solid var(--line); padding: 8px 0 40px;
+.side {
+  width: 320px; flex-shrink: 0; display: flex; flex-direction: column; min-height: 0;
+  background: var(--panel); border-right: 1px solid var(--line);
+}
+.sidebar { flex: 1; overflow-y: auto; padding: 8px 0 16px; }
+.credit {
+  padding: 8px 12px; border-top: 1px solid var(--line); font-size: 11px; line-height: 1.4; color: var(--muted);
 }
 .main { flex: 1; overflow-y: auto; padding: 18px 24px 80px; }
 
@@ -152,7 +156,7 @@ h1 { margin: 0 0 12px; font-size: 22px; font-weight: 600; }
 }
 
 @media (max-width: 900px) {
-  .sidebar { width: 240px; }
+  .side { width: 240px; }
   .details { grid-template-columns: 1fr; }
   #decode-input { width: 180px; }
 }

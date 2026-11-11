@@ -5,6 +5,11 @@
 Browse the Guild Wars skill templates in `data/` as skill bars, with icons, names, descriptions
 (values computed for the build's attribute ranks), English/German toggle and wiki links.
 
+> **Credit:** most of the templates in `data/` were copied from the **GW Teams & Builds** Discord
+> server (server ID `993478828267679864`,
+> [open in Discord](https://discord.com/channels/993478828267679864)). All credit for the builds
+> goes to their authors there.
+
 ![Team view with skill bars, attribute ranks and descriptions](docs/screenshots/overview.png)
 
 ## Screenshots
