@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GW Skill Templates</title>
+  <link rel="stylesheet" href="/web/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">GW <span>Skill Templates</span></div>
+    <input id="search" type="search" placeholder="Filter builds or skills…" autocomplete="off">
+    <form id="decode-form" class="decode">
+      <input id="decode-input" type="text" placeholder="Paste a template code…" autocomplete="off" spellcheck="false">
+      <button type="submit" data-i18n="decode">Show</button>
+    </form>
+    <div class="toggles">
+      <div class="seg" id="lang-toggle" role="group" aria-label="Language">
+        <button data-lang="en">EN</button><button data-lang="de">DE</button>
+      </div>
+      <div class="seg" id="view-toggle" role="group" aria-label="View">
+        <button data-view="full" data-i18n="viewFull">Full</button>
+        <button data-view="concise" data-i18n="viewConcise">Concise</button>
+        <button data-view="bars" data-i18n="viewBars">Bars</button>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <nav id="tree" class="sidebar" aria-label="Templates"></nav>
+    <main id="main" class="main"></main>
+  </div>
+  <div id="tooltip" class="tooltip" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+  <script src="/web/app.js"></script>
+</body>
+</html>

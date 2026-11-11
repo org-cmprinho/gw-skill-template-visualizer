@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xxd \"Skills/ranger-builds/ranger set 1/01 R-X.txt\")",
+      "Bash(awk -F/ '{print NF}')"
+    ]
+  }
+}
