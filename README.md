@@ -1,5 +1,7 @@
 # GW Skill Template Visualizer
 
+**Live version:** https://org-cmprinho.github.io/gw-skill-template-visualizer/
+
 Browse the Guild Wars skill templates in `data/` as skill bars, with icons, names, descriptions
 (values computed for the build's attribute ranks), English/German toggle and wiki links.
 
@@ -48,6 +50,16 @@ Python 3 only, no packages needed. The template tree is read live, so new `.txt`
 - Green numbers are computed for the build's attribute rank (hover them for the 0...15 range).
   Skills that scale with a title track (Sunspear, Asura, Kurzick/Luxon…) show the range.
 - "Original post / notes" shows the matching section from `data/BUILD_INDEX.md`.
+
+## GitHub Pages
+
+`.github/workflows/pages.yml` deploys on every push to `main`: it runs
+`python3 app.py --export _site`, which writes a static copy (UI, `resources/`, and a
+`templates.json` index of `data/`), and publishes that to GitHub Pages. To check a build locally:
+
+```bash
+python3 app.py --export _site && python3 -m http.server -d _site
+```
 
 ## Resources
 

@@ -4,6 +4,7 @@
     python3 app.py                # serves on http://127.0.0.1:8765 and opens the browser
     python3 app.py --port 9000 --no-browser
     python3 app.py --data /path/to/Templates/Skills
+    python3 app.py --export _site  # write a static copy (used for GitHub Pages)
 
 The template tree is read live from the data folder on every reload, so new .txt
 templates show up without restarting.
@@ -12,6 +13,7 @@ import argparse
 import http.server
 import json
 import re
+import shutil
 import threading
 import webbrowser
 from functools import partial
@@ -78,7 +80,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path in ("/", "/index.html"):
             self.path = "/web/index.html"
-        if self.path.split("?")[0] == "/api/templates":
+        if self.path.split("?")[0] == "/templates.json":
             body = json.dumps(scan(self.data_dir), ensure_ascii=False).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -102,14 +104,35 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+def export(out_dir, data_dir):
+    """Static site: index.html + web/ + resources/ + templates.json (same layout the server serves)."""
+    out_dir = out_dir.resolve()
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
+    out_dir.mkdir(parents=True)
+    shutil.copytree(ROOT / "web", out_dir / "web")
+    shutil.copytree(ROOT / "resources", out_dir / "resources")
+    shutil.copy(ROOT / "web" / "index.html", out_dir / "index.html")
+    tree = scan(data_dir)
+    tree["root"] = "data"  # don't leak the local absolute path
+    (out_dir / "templates.json").write_text(json.dumps(tree, ensure_ascii=False), encoding="utf-8")
+    (out_dir / ".nojekyll").touch()
+    n = sum(len(f["files"]) for f in tree["folders"])
+    print(f"exported {len(tree['folders'])} folders / {n} templates → {out_dir}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--data", type=Path, default=ROOT / "data")
     ap.add_argument("--no-browser", action="store_true")
+    ap.add_argument("--export", type=Path, metavar="DIR", help="write a static site to DIR and exit")
     args = ap.parse_args()
     if not (ROOT / "resources" / "skills.json").exists():
         raise SystemExit("resources/skills.json missing – run tools/fetch_wikis.py and tools/build_resources.py")
+    if args.export:
+        export(args.export, args.data.resolve())
+        return
     handler = partial(Handler, data_dir=args.data.resolve())
     srv = http.server.ThreadingHTTPServer(("127.0.0.1", args.port), handler)
     url = f"http://127.0.0.1:{args.port}/"

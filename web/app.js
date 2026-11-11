@@ -97,7 +97,7 @@ function statsHtml(sk) {
   const parts = [];
   const add = (k, v, suffix = "") => {
     if (!v) return;
-    parts.push(`<span class="stat">${icons[k] ? `<img src="/resources/${icons[k]}" alt="${k}">` : k + " "}${esc(v)}${suffix}</span>`);
+    parts.push(`<span class="stat">${icons[k] ? `<img src="resources/${icons[k]}" alt="${k}">` : k + " "}${esc(v)}${suffix}</span>`);
   };
   add("upkeep", sk.upkeep);
   add("energy", sk.energy);
@@ -146,7 +146,7 @@ function slotHtml(sid, i, size) {
   const name = sk ? skillText(sk, "name").text : "#" + sid;
   const link = sk ? wikiLinks(sk).main : null;
   const inner = sk && sk.icon
-    ? `<img src="/resources/${sk.icon}" alt="${esc(name)}" loading="lazy">`
+    ? `<img src="resources/${sk.icon}" alt="${esc(name)}" loading="lazy">`
     : `<span class="noicon">${esc(name)}</span>`;
   const tag = link ? "a" : "span";
   return `<${tag} class="slot${sk && sk.elite ? " elite" : ""}" data-sid="${sid}" data-i="${i}"
@@ -157,7 +157,7 @@ function slotHtml(sid, i, size) {
 function profHtml(id) {
   const p = S.db.professions[id];
   if (!p || !p.icon) return "";
-  return `<img src="/resources/${p.icon}" alt="${esc(p[S.lang])}" title="${esc(p[S.lang])}">`;
+  return `<img src="resources/${p.icon}" alt="${esc(p[S.lang])}" title="${esc(p[S.lang])}">`;
 }
 
 function cardHtml(file, idx) {
@@ -303,8 +303,8 @@ function withTpl(file) {
 
 async function init() {
   const [db, tree] = await Promise.all([
-    fetch("/resources/skills.json").then((r) => r.json()),
-    fetch("/api/templates").then((r) => r.json()),
+    fetch("resources/skills.json").then((r) => r.json()),
+    fetch("templates.json").then((r) => r.json()),
   ]);
   S.db = db;
   for (const [id, a] of Object.entries(db.attributes)) S.attrByEn[a.en] = +id;
